@@ -18,16 +18,16 @@
       <Label text="Home" />
     </ActionBar>
     <MDBottomNavigationBar
-      activeColor="red"
-      inactiveColor="yellow"
-      backgroundColor="black"
+      activeColor="#e57373"
+      badgeColor="#1976d2"
       @tabSelected="onBottomNavigationTabSelected"
     >
       <MDBottomNavigationTab title="First" icon="ic_home" />
       <MDBottomNavigationTab
         title="Second"
-        icon="ic_view_list"
+        icon="iconUtoS('\uf72f')"
         isSelectable="false"
+        class="far"
       />
       <MDBottomNavigationTab title="Third" icon="ic_menu" />
     </MDBottomNavigationBar>
@@ -40,6 +40,9 @@ import { TabSelectedEventData } from "@nativescript-community/ui-material-bottom
 const description = "Position";
 export default Vue.extend({
   methods: {
+    iconUtoS(args:string):string{
+      return `font://${args}`
+    },
     onBottomNavigationTabSelected(args: TabSelectedEventData) {
       console.log("!!!!!");
       console.log(args.oldIndex);
