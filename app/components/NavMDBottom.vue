@@ -21,8 +21,7 @@ export default Vue.extend({
   methods: {
     onBottomNavigationTabSelected(args: TabSelectedEventData) {
       console.log("!!!!!");
-      console.log(args.oldIndex);
-      console.log(args.newIndex);
+      // this.$closeBottomSheet(args.object.id)
       switch (args.newIndex) {
         case 0:
           {
@@ -46,11 +45,13 @@ export default Vue.extend({
               transition: { name: "fade" },
               frame: "main-frame",
             });
+            
           }
           break;
         default:
           console.log(`unknown index ${args.newIndex}`);
       }
+      
     },
   },
 });

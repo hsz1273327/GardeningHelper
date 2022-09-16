@@ -1,25 +1,32 @@
 import Vue from 'nativescript-vue'
-import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'
-import { installMixins, themer } from '@nativescript-community/ui-material-core';
 import { isIOS } from '@nativescript/core';
+import { installMixins, themer } from '@nativescript-community/ui-material-core';
+import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'
+import TabsPlugin from '@nativescript-community/ui-material-tabs/vue';
+import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/vue';
+import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
+import Main from './views/Main.vue'
 installMixins();
 if (isIOS) {
-    themer.setPrimaryColor('#3f51b5');
-    themer.setAccentColor('#e57373');
-    themer.setSecondaryColor('#1976d2');
+  themer.setPrimaryColor('#3f51b5');
+  themer.setAccentColor('#e57373');
+  themer.setSecondaryColor('#1976d2');
 }
 
 themer.createShape('cut', {
   cornerFamily: 'cut' as any,
   cornerSize: {
-      value: 0.5,
-      unit: '%'
+    value: 0.5,
+    unit: '%'
   }
 });
-
+installBottomsheet();
+Vue.use(BottomSheetPlugin);
 Vue.use(BottomNavigationBar);
+Vue.use(TabsPlugin);
 
-import Main from './views/Main.vue'
+
+
 declare let __DEV__: boolean;
 
 // Prints Vue logs when --env.production is *NOT* set while building
