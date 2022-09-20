@@ -4,6 +4,7 @@
     badgeColor="#1976d2"
     selectedTabIndex="0"
     @tabSelected="onBottomNavigationTabSelected"
+    id="navmd-bottom"
   >
     <MDBottomNavigationTab title="Home" />
     <MDBottomNavigationTab title="Page1" />
@@ -11,7 +12,7 @@
   </MDBottomNavigationBar>
 </template>
   
-  <script lang="ts">
+<script lang="ts">
 import Vue from "nativescript-vue";
 import { TabSelectedEventData } from "@nativescript-community/ui-material-bottomnavigationbar";
 import HomePage from "../views/HomePage.vue";
@@ -21,7 +22,6 @@ export default Vue.extend({
   methods: {
     onBottomNavigationTabSelected(args: TabSelectedEventData) {
       console.log("!!!!!");
-      // this.$closeBottomSheet(args.object.id)
       switch (args.newIndex) {
         case 0:
           {
@@ -45,13 +45,11 @@ export default Vue.extend({
               transition: { name: "fade" },
               frame: "main-frame",
             });
-            
           }
           break;
         default:
           console.log(`unknown index ${args.newIndex}`);
       }
-      
     },
   },
 });

@@ -4,7 +4,10 @@ import { installMixins, themer } from '@nativescript-community/ui-material-core'
 import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'
 import TabsPlugin from '@nativescript-community/ui-material-tabs/vue';
 import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/vue';
+import DrawerPlugin from '@nativescript-community/ui-drawer/vue'
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
+import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
+
 import Main from './views/Main.vue'
 installMixins();
 if (isIOS) {
@@ -21,11 +24,11 @@ themer.createShape('cut', {
   }
 });
 installBottomsheet();
-Vue.use(BottomSheetPlugin);
+installUIDrawer()
 Vue.use(BottomNavigationBar);
 Vue.use(TabsPlugin);
-
-
+Vue.use(BottomSheetPlugin);
+Vue.use(DrawerPlugin);
 
 declare let __DEV__: boolean;
 
