@@ -1,26 +1,33 @@
 <template>
-  <Page>
-    <Drawer ref="drawer">
-      <SideSheet ~leftDrawer />
-      <SideSheet ~rightDrawer />
-      <NavMDBottom ~topDrawer />
-      <NavMDBottom ~bottomDrawer />
-      <Frame ~mainContent id="main-frame"><HomePage /></Frame>
-    </Drawer>
+  <Page actionBarHidden="true">
+    <!--底部导航-->
+    <GridLayout rows="*, auto">
+      <Frame id="main-frame" row="0" ref="outerView">
+        <HomePage />
+      </Frame>
+      <NavMDBottom row="1" ref="bottomBar"/>
+    </GridLayout>
   </Page>
 </template>
 
 <script lang="ts">
 import Vue from "nativescript-vue";
-import HomePage from "./HomePage.vue";
-import SideSheet from "../components/SideSheet.vue"
 import NavMDBottom from "../components/NavMDBottom.vue";
+import HomePage from "./HomePage.vue";
+
+
 export default Vue.extend({
-  components: {
-    HomePage,
-    NavMDBottom,
-    SideSheet,
-  },
+  components: { NavMDBottom, HomePage },
 });
 </script>
+
+<style scoped lang="scss">
+@import "@nativescript/theme/scss/variables/blue";
+
+.info {
+  font-size: 20;
+  horizontal-align: center;
+  vertical-align: center;
+}
+</style>
 

@@ -13,6 +13,7 @@ import HomePage from "../views/HomePage.vue";
 import Page1 from "../views/Page1.vue";
 import Page2 from "../views/Page2.vue";
 export default Vue.extend({
+  name: "SideSheet",
   methods: {
     toHomePage(evt: TapGestureEventData) {
       this.$navigateTo(HomePage, {

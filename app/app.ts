@@ -4,10 +4,14 @@ import { installMixins, themer } from '@nativescript-community/ui-material-core'
 import BottomNavigationBar from '@nativescript-community/ui-material-bottomnavigationbar/vue'
 import TabsPlugin from '@nativescript-community/ui-material-tabs/vue';
 import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/vue';
+import ActivityIndicatorPlugin from '@nativescript-community/ui-material-activityindicator/vue';
+import ProgressPlugin from '@nativescript-community/ui-material-progress/vue';
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue'
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
+import { LocalNotifications } from '@nativescript/local-notifications'
 
+LocalNotifications.hasPermission().then((res)=>{console.log(`LocalNotifications.hasPermission ${res}`)})
 import Main from './views/Main.vue'
 installMixins();
 if (isIOS) {
@@ -28,6 +32,8 @@ installUIDrawer()
 Vue.use(BottomNavigationBar);
 Vue.use(TabsPlugin);
 Vue.use(BottomSheetPlugin);
+Vue.use(ActivityIndicatorPlugin);
+Vue.use(ProgressPlugin);
 Vue.use(DrawerPlugin);
 
 declare let __DEV__: boolean;

@@ -1,8 +1,8 @@
 <template>
   <Page actionBarHidden="true">
     <StackLayout>
-      <Label text="Home"></Label>
-      <ActivityIndicator busy="true" @busyChange="onBusyChanged" />
+      <Label text="Home" id="banner" ref="banner"></Label>
+      <Button text="snackbar" @tap="onActionTapSnackbar" />
     </StackLayout>
   </Page>
 </template>
@@ -10,15 +10,25 @@
 <script lang="ts">
 import Vue from "nativescript-vue";
 import { EventData } from "@nativescript/core/data/observable";
-import { ActivityIndicator } from "@nativescript/core/ui/activity-indicator";
+import {
+  DismissReasons,
+  SnackBarAction,
+  showSnack,
+} from "@nativescript-community/ui-material-snackbar";
+interface showSnackResult {
+  command: SnackBarAction;
+  reason: DismissReasons;
+  event: number;
+}
 export default Vue.extend({
-  mounted: function () {
-    console.log("&&&&mounted home frame");
-  },
   methods: {
-    onBusyChanged(evt: EventData) {
-      let obj = evt.object as ActivityIndicator;
-      console.log(`is busy ${obj.busy}`);
+    onActionTapSnackbar(evt: EventData) {
+      showSnack({
+        message: "this is test snack with action!",
+        actionText: "done",
+      }).then((r: showSnackResult) => {
+        console.log("showSnack result", r);
+      });
     },
   },
 });
