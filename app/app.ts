@@ -7,6 +7,9 @@ import BottomSheetPlugin from '@nativescript-community/ui-material-bottomsheet/v
 import ActivityIndicatorPlugin from '@nativescript-community/ui-material-activityindicator/vue';
 import ProgressPlugin from '@nativescript-community/ui-material-progress/vue';
 import DrawerPlugin from '@nativescript-community/ui-drawer/vue'
+import ButtonPlugin from '@nativescript-community/ui-material-button/vue';
+import FloatingActionButtonPlugin from '@nativescript-community/ui-material-floatingactionbutton/vue';
+
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 import { LocalNotifications } from '@nativescript/local-notifications'
@@ -35,6 +38,12 @@ Vue.use(BottomSheetPlugin);
 Vue.use(ActivityIndicatorPlugin);
 Vue.use(ProgressPlugin);
 Vue.use(DrawerPlugin);
+Vue.use(ButtonPlugin);
+Vue.use(FloatingActionButtonPlugin);
+Vue.registerElement(
+  'Fab',
+  () => require('@nstudio/nativescript-floatingactionbutton').Fab
+);
 
 declare let __DEV__: boolean;
 
