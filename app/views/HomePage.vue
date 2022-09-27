@@ -32,15 +32,6 @@
         variant="text"
         class="fas"
       />
-      <!-- <MDFloatingActionButton rippleColor="blue" src="res://ic_input_add"/> -->
-      <MDFloatingActionButton
-        rippleColor="blue"
-        src="res://fa_plus"
-        @tap="onActionTap"
-        @doubleTap="onActionDoubleTap"
-        @longPress="onActionLongPress"
-      />
-
       <fab
         rippleColor="blue"
         :text="iconUnicode('\uf067')"
@@ -48,17 +39,58 @@
         class="fas fab-button"
       ></fab>
 
+      <RangeSeekBar
+        col="1"
+        :minValue="rangeSeekBarProp.minValue"
+        :maxValue="rangeSeekBarProp.maxValue"
+        :valueMin="rangeSeekBarProp.valueMin"
+        :valueMax="rangeSeekBarProp.valueMax"
+        :minRange="rangeSeekBarProp.minRange"
+        :step="rangeSeekBarProp.step"
+        @valueChanged="valueChanged($event)"
+        @finalValueChanged="finalValueChanged($event)"
+        class="range-seek-bar"
+      />
 
+      
     </StackLayout>
   </Page>
 </template>
   
 <script lang="ts">
 import Vue from "nativescript-vue";
+import { RangeSeekBarEventData } from '@nativescript-community/ui-range-seek-bar';
 import { EventData } from "@nativescript/core/data/observable";
 
 export default Vue.extend({
+  data: function () {
+    return {
+      isChecked: false,
+      selectedDate: new Date(),
+      tfvalue: "",
+      rangeSeekBarProp: {
+        minValue: 0,
+        maxValue: 100,
+        valueMin: 10,
+        valueMax: 60,
+        minRange: 10,
+        step: 2.4,
+      },
+    };
+  },
   methods: {
+    valueChanged(event: RangeSeekBarEventData) {
+      Object.assign(this.rangeSeekBarProp, event.value);
+    },
+    finalValueChanged(event: RangeSeekBarEventData) {
+      Object.assign(this.rangeSeekBarProp, event.value);
+    },
+    toggleCheck() {
+      this.isChecked = !this.isChecked;
+    },
+    getCheckProp() {
+      console.log(this.isChecked);
+    },
     iconUnicode(icon: string): string {
       return `${icon}`;
     },
@@ -78,9 +110,23 @@ export default Vue.extend({
 <style scoped>
 .fab-button {
   height: 70;
-  width: 70; 
+  width: 70;
   margin: 15;
   horizontal-align: right;
   vertical-align: bottom;
 }
+.range-seek-bar {
+    bar-color: #8990c4;
+    bar-highlight-color: #2434ad;
+    thumb-color: #1a246d;
+    bar-height: 10;
+    corner-radius: 30;
+}
+
+/* MDSpeedDialButton {
+  border-radius: 20;
+}
+MDSpeedDialItemButton {
+  border-radius: 15;
+} */
 </style>
