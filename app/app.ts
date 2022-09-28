@@ -14,10 +14,14 @@ import CheckBoxPlugin from '@nativescript-community/ui-checkbox/vue';
 import DateTimePickerPlugin from "@nativescript/datetimepicker/vue";
 import TextFieldPlugin from '@nativescript-community/ui-material-textfield/vue';
 import SekkBarPlugin from '@nativescript-community/ui-range-seek-bar/vue';
+import { Label as HTMLLabel, enableIOSDTCoreText } from '@nativescript-community/ui-label';
+import CanvasLabel from '@nativescript-community/ui-canvaslabel/vue';
+
 
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
 import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
 import { LocalNotifications } from '@nativescript/local-notifications'
+
 
 LocalNotifications.hasPermission().then((res)=>{console.log(`LocalNotifications.hasPermission ${res}`)})
 import Main from './views/Main.vue'
@@ -26,6 +30,7 @@ if (isIOS) {
   themer.setPrimaryColor('#3f51b5');
   themer.setAccentColor('#e57373');
   themer.setSecondaryColor('#1976d2');
+  enableIOSDTCoreText();
 }
 
 themer.createShape('cut', {
@@ -37,6 +42,7 @@ themer.createShape('cut', {
 });
 installBottomsheet();
 installUIDrawer()
+
 Vue.use(BottomNavigationBar);
 Vue.use(TabsPlugin);
 Vue.use(BottomSheetPlugin);
@@ -54,7 +60,8 @@ Vue.registerElement(
   'Fab',
   () => require('@nstudio/nativescript-floatingactionbutton').Fab
 );
-
+Vue.use(CanvasLabel);
+Vue.registerElement('HTMLLabel', () => HTMLLabel);
 
 declare let __DEV__: boolean;
 

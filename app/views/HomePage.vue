@@ -1,127 +1,78 @@
 <template>
   <Page actionBarHidden="true">
     <StackLayout>
-      <Label text="Home" id="banner" ref="banner"></Label>
-      <Button
-        :text="`${iconUnicode('\uf067')} snackbar`"
-        @tap="onActionTap"
-        @doubleTap="onActionDoubleTap"
-        @longPress="onActionLongPress"
-        class="fas"
-      />
-      <MDButton
-        :text="`${iconUnicode('\uf067')} snackbar`"
-        @tap="onActionTap"
-        @doubleTap="onActionDoubleTap"
-        @longPress="onActionLongPress"
-        class="fas"
-      />
-      <MDButton
-        :text="`${iconUnicode('\uf067')} snackbar`"
-        @tap="onActionTap"
-        @doubleTap="onActionDoubleTap"
-        @longPress="onActionLongPress"
-        variant="flat"
-        class="fas"
-      />
-      <MDButton
-        :text="`${iconUnicode('\uf067')} snackbar`"
-        @tap="onActionTap"
-        @doubleTap="onActionDoubleTap"
-        @longPress="onActionLongPress"
-        variant="text"
-        class="fas"
-      />
-      <fab
-        rippleColor="blue"
-        :text="iconUnicode('\uf067')"
-        @tap="onActionTap"
-        class="fas fab-button"
-      ></fab>
-
-      <RangeSeekBar
-        col="1"
-        :minValue="rangeSeekBarProp.minValue"
-        :maxValue="rangeSeekBarProp.maxValue"
-        :valueMin="rangeSeekBarProp.valueMin"
-        :valueMax="rangeSeekBarProp.valueMax"
-        :minRange="rangeSeekBarProp.minRange"
-        :step="rangeSeekBarProp.step"
-        @valueChanged="valueChanged($event)"
-        @finalValueChanged="finalValueChanged($event)"
-        class="range-seek-bar"
+      <Label text="Label" />
+      <Label textWrap="true">
+        <FormattedString>
+          <Span text="This text has a " />
+          <Span text="red " style="color: red" />
+          <Span text="piece of text. " />
+          <Span text="Also, this bit is italic, " fontStyle="italic" />
+          <Span text="and this bit is bold." fontWeight="bold" />
+        </FormattedString>
+      </Label>
+      <HTMLLabel
+        fontSize="50"
+        fontFamily="Cabin Sketch,res/cabinsketch"
+        width="100%"
+        paddingTop="5"
+        color="#336699"
+        textWrap="true"
+        :html="someBindedValue"
+        verticalAlignment="top"
       />
 
-      
+      <!-- Clickable Link Usage -->
+      <HTMLLabel
+        html="<a href='https://youtube.com'>Open Youtube.com</a>"
+        linkColor="pink"
+        linkUnderline="false"
+        @linkTap="onLinkTap($event)"
+        fontFamily="OpenSans"
+        fontSize="16"
+        margin="2 5 5 5"
+        textWrap="true"
+      ></HTMLLabel>
+
+      <CanvasLabel id="canvaslabel" fontSize="10" color="white" backgroundColor="darkgray">
+        <CGroup fontSize="18" verticalAlignment="middle" paddingLeft="20">
+            <CSpan :text="line('canvaslabel')" fontWeight="bold" />
+            <CSpan :text="line('next line')" color="#ccc" fontSize="16" />
+        </CGroup>
+        <CSpan text="end" color="lightgray" fontSize="14" textAlignment="right" paddingRight="20" paddingTop="4" />
+    </CanvasLabel>
     </StackLayout>
   </Page>
 </template>
   
 <script lang="ts">
 import Vue from "nativescript-vue";
-import { RangeSeekBarEventData } from '@nativescript-community/ui-range-seek-bar';
 import { EventData } from "@nativescript/core/data/observable";
 
 export default Vue.extend({
   data: function () {
     return {
-      isChecked: false,
-      selectedDate: new Date(),
-      tfvalue: "",
-      rangeSeekBarProp: {
-        minValue: 0,
-        maxValue: 100,
-        valueMin: 10,
-        valueMax: 60,
-        minRange: 10,
-        step: 2.4,
-      },
+      someBindedValue:
+        "<p>This is really powerful. <b>Amazing to be quite honest</b></p>",
     };
   },
   methods: {
-    valueChanged(event: RangeSeekBarEventData) {
-      Object.assign(this.rangeSeekBarProp, event.value);
-    },
-    finalValueChanged(event: RangeSeekBarEventData) {
-      Object.assign(this.rangeSeekBarProp, event.value);
-    },
-    toggleCheck() {
-      this.isChecked = !this.isChecked;
-    },
-    getCheckProp() {
-      console.log(this.isChecked);
+    // event binded to the linkTap on the HTMLLabel
+    onLinkTap(evt: EventData) {
+      console.log("Linktap ok");
     },
     iconUnicode(icon: string): string {
       return `${icon}`;
     },
-    onActionTap(evt: EventData) {
-      console.log("tap ok");
-    },
-    onActionDoubleTap(evt: EventData) {
-      console.log("double tap ok");
-    },
-    onActionLongPress(evt: EventData) {
-      console.log("long press ok");
-    },
+    line(row:string): string {
+      return `${row}\n`
+    }
   },
 });
 </script>
 
 <style scoped>
-.fab-button {
-  height: 70;
-  width: 70;
-  margin: 15;
-  horizontal-align: right;
-  vertical-align: bottom;
-}
-.range-seek-bar {
-    bar-color: #8990c4;
-    bar-highlight-color: #2434ad;
-    thumb-color: #1a246d;
-    bar-height: 10;
-    corner-radius: 30;
-}
+
 
 /* MDSpeedDialButton {
   border-radius: 20;
