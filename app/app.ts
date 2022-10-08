@@ -17,13 +17,20 @@ import SekkBarPlugin from '@nativescript-community/ui-range-seek-bar/vue';
 import { Label as HTMLLabel, enableIOSDTCoreText } from '@nativescript-community/ui-label';
 import CanvasLabel from '@nativescript-community/ui-canvaslabel/vue';
 
+import ImageModulePlugin from '@nativescript-community/ui-image/vue';
+import { initialize as imageInitialize } from '@nativescript-community/ui-image';
+import CanvasPlugin from '@nativescript-community/ui-canvas/vue';
+// import ZoomImageModulePlugin from '@nativescript-community/ui-zoomimage/vue';
+// import { installMixins as imageInstallMixins  } from '@nativescript-community/ui-image-colorfilter';
+
+
 
 import { install as installBottomsheet } from "@nativescript-community/ui-material-bottomsheet";
-import { install as installUIDrawer} from '@nativescript-community/ui-drawer';
+import { install as installUIDrawer } from '@nativescript-community/ui-drawer';
 import { LocalNotifications } from '@nativescript/local-notifications'
 
 
-LocalNotifications.hasPermission().then((res)=>{console.log(`LocalNotifications.hasPermission ${res}`)})
+LocalNotifications.hasPermission().then((res) => { console.log(`LocalNotifications.hasPermission ${res}`) })
 import Main from './views/Main.vue'
 installMixins();
 if (isIOS) {
@@ -60,8 +67,31 @@ Vue.registerElement(
   'Fab',
   () => require('@nstudio/nativescript-floatingactionbutton').Fab
 );
+
 Vue.use(CanvasLabel);
 Vue.registerElement('HTMLLabel', () => HTMLLabel);
+
+
+Vue.use(CanvasPlugin);
+
+
+imageInitialize();
+Vue.use(ImageModulePlugin);
+// imageInstallMixins();
+// Vue.use(ZoomImageModulePlugin);
+import { LineChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('LineChart', () => LineChart);
+
+
+import { BarChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('BarChart', ()=>BarChart);
+
+import { ScatterChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('ScatterChart', ()=>ScatterChart);
+
+
+import { BubbleChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('BubbleChart', ()=>BubbleChart);
 
 declare let __DEV__: boolean;
 

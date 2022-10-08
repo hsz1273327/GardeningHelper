@@ -1,79 +1,95 @@
 <template>
   <Page actionBarHidden="true">
     <StackLayout>
-      <Label text="Label" />
-      <Label textWrap="true">
-        <FormattedString>
-          <Span text="This text has a " />
-          <Span text="red " style="color: red" />
-          <Span text="piece of text. " />
-          <Span text="Also, this bit is italic, " fontStyle="italic" />
-          <Span text="and this bit is bold." fontWeight="bold" />
-        </FormattedString>
-      </Label>
-      <HTMLLabel
-        fontSize="50"
-        fontFamily="Cabin Sketch,res/cabinsketch"
-        width="100%"
-        paddingTop="5"
-        color="#336699"
-        textWrap="true"
-        :html="someBindedValue"
-        verticalAlignment="top"
-      />
-
-      <!-- Clickable Link Usage -->
-      <HTMLLabel
-        html="<a href='https://youtube.com'>Open Youtube.com</a>"
-        linkColor="pink"
-        linkUnderline="false"
-        @linkTap="onLinkTap($event)"
-        fontFamily="OpenSans"
-        fontSize="16"
-        margin="2 5 5 5"
-        textWrap="true"
-      ></HTMLLabel>
-
-      <CanvasLabel id="canvaslabel" fontSize="10" color="white" backgroundColor="darkgray">
-        <CGroup fontSize="18" verticalAlignment="middle" paddingLeft="20">
-            <CSpan :text="line('canvaslabel')" fontWeight="bold" />
-            <CSpan :text="line('next line')" color="#ccc" fontSize="16" />
-        </CGroup>
-        <CSpan text="end" color="lightgray" fontSize="14" textAlignment="right" paddingRight="20" paddingTop="4" />
-    </CanvasLabel>
+      <BubbleChart ref="chart" @loaded="onChartLoaded" />
     </StackLayout>
   </Page>
 </template>
   
 <script lang="ts">
 import Vue from "nativescript-vue";
-import { EventData } from "@nativescript/core/data/observable";
 
+import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart';
+import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
+import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
+import { XAxisPosition } from "@nativescript-community/ui-chart/components/XAxis";
+import { LegendForm, LegendOrientation, LegendVerticalAlignment, LegendHorizontalAlignment } from '@nativescript-community/ui-chart/components/Legend';
 export default Vue.extend({
-  data: function () {
-    return {
-      someBindedValue:
-        "<p>This is really powerful. <b>Amazing to be quite honest</b></p>",
-    };
-  },
   methods: {
-    // event binded to the linkTap on the HTMLLabel
-    onLinkTap(evt: EventData) {
-      console.log("Linktap ok");
+    onChartLoaded() {
+      const eleview = this.$refs.chart as Vue;
+      const chart = eleview.nativeView as BubbleChart;
+
+      chart.setDrawGridBackground(false);
+      chart.setTouchEnabled(true);
+      // enable scaling and dragging
+      chart.setDragEnabled(true);
+      chart.setScaleEnabled(true);
+      chart.setMaxVisibleValueCount(200);
+      chart.setPinchZoom(true);
+      const l = chart.getLegend();
+      l.setEnabled(true)
+      l.setVerticalAlignment(LegendVerticalAlignment.TOP);
+      l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
+      l.setOrientation(LegendOrientation.VERTICAL);
+      l.setDrawInside(false);
+      const yl = chart.getAxisLeft();
+      yl.setSpaceTop(30);
+      yl.setSpaceBottom(30);
+      yl.setDrawZeroLine(false);
+      chart.getAxisRight().setEnabled(false);
+      const xl = chart.getXAxis();
+      xl.setPosition(XAxisPosition.BOTTOM);
+
+      // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
+
+      const values1 = [];
+      const values2 = [];
+      const values3 = [];
+      for (let i = 0; i < 20; i++) {
+          values1.push({
+              y: Math.random() * 100,
+              x: Math.random() * 10,
+              size: Math.random() * 100,
+          });
+          values2.push({
+              y: Math.random() * 100,
+              x: Math.random() * 10,
+              size: Math.random() * 100,
+          });
+          values3.push({
+              y: Math.random() * 100,
+              x: Math.random() * 10,
+              size: Math.random() * 100
+          });
+      }
+      // create a dataset and give it a type
+      const set1 = new BubbleDataSet(values1, 'DS 1');
+      set1.setForm(LegendForm.SQUARE);
+      set1.setDrawValues(true);
+      set1.setColor('red');
+      const set2 = new BubbleDataSet(values2, 'DS 2');
+      set2.setForm(LegendForm.SQUARE);
+      set2.setDrawValues(true);
+      set2.setColor('green');
+      const set3 = new BubbleDataSet(values3, 'DS 3');
+      set3.setForm(LegendForm.SQUARE);
+      set3.setDrawValues(true);
+      set3.setColor('blue');
+      // create a data object with the data sets
+      const data = new BubbleData([set1, set2, set3]);
+      data.setDrawValues(false);
+      data.setValueTextSize(8);
+      data.setValueTextColor('white');
+      data.setHighlightCircleWidth(1.5);
+      chart.setData(data);
+      chart.invalidate();
     },
-    iconUnicode(icon: string): string {
-      return `${icon}`;
-    },
-    line(row:string): string {
-      return `${row}\n`
-    }
   },
 });
 </script>
 
 <style scoped>
-
-
 /* MDSpeedDialButton {
   border-radius: 20;
 }
