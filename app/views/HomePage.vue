@@ -1,89 +1,90 @@
 <template>
   <Page actionBarHidden="true">
     <StackLayout>
-      <BubbleChart ref="chart" @loaded="onChartLoaded" />
+      <RadarChart ref="chart" @loaded="onChartLoaded" />
     </StackLayout>
   </Page>
 </template>
   
+
 <script lang="ts">
 import Vue from "nativescript-vue";
 
-import { BubbleChart } from '@nativescript-community/ui-chart/charts/BubbleChart';
-import { BubbleData } from '@nativescript-community/ui-chart/data/BubbleData';
-import { BubbleDataSet } from '@nativescript-community/ui-chart/data/BubbleDataSet';
-import { XAxisPosition } from "@nativescript-community/ui-chart/components/XAxis";
-import { LegendForm, LegendOrientation, LegendVerticalAlignment, LegendHorizontalAlignment } from '@nativescript-community/ui-chart/components/Legend';
+import { RadarChart } from "@nativescript-community/ui-chart/charts/RadarChart";
+import { RadarData } from "@nativescript-community/ui-chart/data/RadarData";
+import { RadarDataSet } from "@nativescript-community/ui-chart/data/RadarDataSet";
+
+import { PieEntry } from "@nativescript-community/ui-chart/data/PieEntry";
+import { BaseEntry } from "@nativescript-community/ui-chart/data/BaseEntry";
+import { AxisBase } from "@nativescript-community/ui-chart/components/AxisBase";
+import { BarEntry } from "@nativescript-community/ui-chart/data/BarEntry";
+import { Entry } from "@nativescript-community/ui-chart/data/Entry";
+import { RadarEntry } from "@nativescript-community/ui-chart/data/RadarEntry";
+import { BubbleEntry } from "@nativescript-community/ui-chart/data/BubbleEntry";
+import { CandleEntry } from "@nativescript-community/ui-chart/data/CandleEntry";
+import { ViewPortHandler } from "@nativescript-community/ui-chart/utils/ViewPortHandler";
+
 export default Vue.extend({
   methods: {
     onChartLoaded() {
       const eleview = this.$refs.chart as Vue;
-      const chart = eleview.nativeView as BubbleChart;
+      const chart = eleview.nativeView as RadarChart;
 
-      chart.setDrawGridBackground(false);
-      chart.setTouchEnabled(true);
-      // enable scaling and dragging
-      chart.setDragEnabled(true);
-      chart.setScaleEnabled(true);
-      chart.setMaxVisibleValueCount(200);
-      chart.setPinchZoom(true);
-      const l = chart.getLegend();
-      l.setEnabled(true)
-      l.setVerticalAlignment(LegendVerticalAlignment.TOP);
-      l.setHorizontalAlignment(LegendHorizontalAlignment.RIGHT);
-      l.setOrientation(LegendOrientation.VERTICAL);
-      l.setDrawInside(false);
-      const yl = chart.getAxisLeft();
-      yl.setSpaceTop(30);
-      yl.setSpaceBottom(30);
-      yl.setDrawZeroLine(false);
-      chart.getAxisRight().setEnabled(false);
-      const xl = chart.getXAxis();
-      xl.setPosition(XAxisPosition.BOTTOM);
+      // 设置点击高亮
+      chart.setHighlightPerTapEnabled(true);
+      chart.setWebColor("red");
+      chart.setWebColorInner("blue");
 
-      // 设置待渲染的设置对象,构造函数参数为待渲染的数据, 图例标签,待渲染数据中代表x轴的属性名,待渲染数据中代表y轴的属性名
+      //y轴
+      let yl = chart.getYAxis()
+      yl.setSuggestedAxisMinimum(0)
+      yl.setSpaceMax(2)
+      let xl = chart.getXAxis()
+      xl.setTextColor("green");
 
-      const values1 = [];
-      const values2 = [];
-      const values3 = [];
-      for (let i = 0; i < 20; i++) {
-          values1.push({
-              y: Math.random() * 100,
-              x: Math.random() * 10,
-              size: Math.random() * 100,
-          });
-          values2.push({
-              y: Math.random() * 100,
-              x: Math.random() * 10,
-              size: Math.random() * 100,
-          });
-          values3.push({
-              y: Math.random() * 100,
-              x: Math.random() * 10,
-              size: Math.random() * 100
-          });
+      // 构造要渲染的数据,index为横轴,value为纵轴
+      let entries = [];
+      const parties = ["Party A", "Party B", "Party C", "Party D", "Party E"];
+      for (let i = 0; i < 5; i++) {
+        entries.push({
+          y: Math.random() * 10,
+          label: parties[i],
+        });
       }
-      // create a dataset and give it a type
-      const set1 = new BubbleDataSet(values1, 'DS 1');
-      set1.setForm(LegendForm.SQUARE);
-      set1.setDrawValues(true);
-      set1.setColor('red');
-      const set2 = new BubbleDataSet(values2, 'DS 2');
-      set2.setForm(LegendForm.SQUARE);
-      set2.setDrawValues(true);
-      set2.setColor('green');
-      const set3 = new BubbleDataSet(values3, 'DS 3');
-      set3.setForm(LegendForm.SQUARE);
-      set3.setDrawValues(true);
-      set3.setColor('blue');
-      // create a data object with the data sets
-      const data = new BubbleData([set1, set2, set3]);
-      data.setDrawValues(false);
-      data.setValueTextSize(8);
-      data.setValueTextColor('white');
-      data.setHighlightCircleWidth(1.5);
+      const dataSet = new RadarDataSet(entries, "性能指标", "y");
+      dataSet.setValueFormatter({
+        getFormattedValue(value: number, entry?: BaseEntry): string {
+          return "";
+        },
+        getAxisLabel(value: number, axis: AxisBase): string {
+          return "";
+        },
+        getBarLabel(value: any, entry: BarEntry): string {
+          return "";
+        },
+        getBarStackedLabel(value: any, entry: BarEntry): string {
+          return "";
+        },
+        getPointLabel(value: any, entry: Entry): string {
+          return "";
+        },
+        getPieLabel(value: any, entry: PieEntry): string {
+          return "";
+        },
+        getRadarLabel(value: any, entry: RadarEntry): string {
+          return `${value}`;
+        },
+        getBubbleLabel(value: any, entry: BubbleEntry): string {
+          return "";
+        },
+        getCandleLabel(value: any, entry: CandleEntry): string {
+          return "";
+        },
+      });
+      dataSet.setDrawValues(true);
+      const data = new RadarData([dataSet]);
+      data.setLabels(parties);
       chart.setData(data);
-      chart.invalidate();
     },
   },
 });

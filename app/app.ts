@@ -71,9 +71,7 @@ Vue.registerElement(
 Vue.use(CanvasLabel);
 Vue.registerElement('HTMLLabel', () => HTMLLabel);
 
-
 Vue.use(CanvasPlugin);
-
 
 imageInitialize();
 Vue.use(ImageModulePlugin);
@@ -82,16 +80,26 @@ Vue.use(ImageModulePlugin);
 import { LineChart } from "@nativescript-community/ui-chart/charts"
 Vue.registerElement('LineChart', () => LineChart);
 
-
 import { BarChart } from "@nativescript-community/ui-chart/charts"
-Vue.registerElement('BarChart', ()=>BarChart);
+Vue.registerElement('BarChart', () => BarChart);
 
 import { ScatterChart } from "@nativescript-community/ui-chart/charts"
-Vue.registerElement('ScatterChart', ()=>ScatterChart);
-
+Vue.registerElement('ScatterChart', () => ScatterChart);
 
 import { BubbleChart } from "@nativescript-community/ui-chart/charts"
-Vue.registerElement('BubbleChart', ()=>BubbleChart);
+Vue.registerElement('BubbleChart', () => BubbleChart);
+
+import { HorizontalBarChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('HorizontalBarChart', () => HorizontalBarChart);
+
+import { CandleStickChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('CandleStickChart', () => CandleStickChart);
+
+import { PieChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('PieChart', () => PieChart);
+
+import { RadarChart } from "@nativescript-community/ui-chart/charts"
+Vue.registerElement('RadarChart', ()=>RadarChart);
 
 declare let __DEV__: boolean;
 
