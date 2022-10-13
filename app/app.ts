@@ -49,6 +49,11 @@ themer.createShape('cut', {
 });
 installBottomsheet();
 installUIDrawer()
+import CardViewPlugin from '@nativescript-community/ui-material-cardview/vue';
+Vue.use(CardViewPlugin);
+
+import CollectionView from '@nativescript-community/ui-collectionview/vue';
+Vue.use(CollectionView);
 
 Vue.use(BottomNavigationBar);
 Vue.use(TabsPlugin);
@@ -100,6 +105,9 @@ Vue.registerElement('PieChart', () => PieChart);
 
 import { RadarChart } from "@nativescript-community/ui-chart/charts"
 Vue.registerElement('RadarChart', ()=>RadarChart);
+
+import waterfallInstall from '@nativescript-community/ui-collectionview-waterfall';
+waterfallInstall();
 
 declare let __DEV__: boolean;
 
